@@ -1,5 +1,5 @@
 # Aligned CSRBench-oracle
-===================
+
 **Requirements:**
  * Java 7+
  * Maven

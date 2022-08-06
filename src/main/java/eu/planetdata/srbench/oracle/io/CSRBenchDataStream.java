@@ -63,7 +63,6 @@ public class CSRBenchDataStream implements Runnable {
 	}
 	
 	public void addTimestampedData(File f, long timestamp) throws Exception {
-		OutputStream out = new FileOutputStream("test.out", true);
 		long currentTimestamp = timestamp + System.currentTimeMillis();
 		URI graph = BenchmarkVocab.getGraphURI(timestamp);
 		Model model1 = ModelFactory.createDefaultModel();
@@ -81,11 +80,9 @@ public class CSRBenchDataStream implements Runnable {
 			RDFDataMgr.write(s, model2, Lang.RDFXML);
 		} else if(rdfFormat == Oracle.RDFFormat.ntriples) {
 			RDFDataMgr.write(s, model1, Lang.NTRIPLES);
-			out.write(s.toString().getBytes(StandardCharsets.UTF_8));
 			stream.send(s.toString());
 			RDFDataMgr.write(s, model2, Lang.NTRIPLES);
 		}
-		out.write(s.toString().getBytes(StandardCharsets.UTF_8));
 		stream.send(s.toString());
 		//out.write(s.toString().getBytes(StandardCharsets.UTF_8));
 
