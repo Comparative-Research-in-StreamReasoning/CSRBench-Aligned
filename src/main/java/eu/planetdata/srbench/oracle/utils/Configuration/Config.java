@@ -82,6 +82,10 @@ public class Config {
 		return config.getString(key+".rspqlquery");
 	}
 
+	public String getRDFoxQuery(String key) {
+		return config.getString(key+".rdfoxquery");
+	}
+
 	public String getCSPARQLQuery(String key) {
 		return config.getString(key+".csparqlquery");
 	}

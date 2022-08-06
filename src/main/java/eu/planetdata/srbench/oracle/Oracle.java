@@ -71,7 +71,7 @@ import java.util.stream.Collectors;
 
 public class Oracle {
 	public enum QueryLanguage {
-		cqels, csparql, rspql, unsupported
+		cqels, csparql, rspql, rdfox, unsupported
 	}
 	public enum RDFFormat {
 		ntriples, turtle, rdfxml
@@ -221,6 +221,8 @@ public class Oracle {
 				Config.getInstance().setQueryLanguage(QueryLanguage.csparql);
 			else if (parameters.get("queryLanguage").equals("rspql"))
 				Config.getInstance().setQueryLanguage(QueryLanguage.rspql);
+			else if (parameters.get("queryLanguage").equals("rdfox"))
+				Config.getInstance().setQueryLanguage(QueryLanguage.rdfox);
 			else if (parameters.get("queryLanguage").equals("unsupported"))
 				Config.getInstance().setQueryLanguage(QueryLanguage.unsupported);
 			else {
@@ -350,7 +352,9 @@ public class Oracle {
 				queries.putAll(getCSPARQLQueries());
 			} else if(queryLanguage == QueryLanguage.rspql) {
 				queries.putAll(getRSPQLQueries());
-		}
+			} else if(queryLanguage == QueryLanguage.rdfox) {
+				queries.putAll(getRDFoxQueries());
+			}
 		return queries;
 	}
 
@@ -366,6 +370,14 @@ public class Oracle {
 		Map<String, String> queries = new HashMap<>();
 		for(String queryKey : Config.getInstance().getQuerySet()) {
 			queries.put("q" + queryKey.substring(queryKey.length()-1), Config.getInstance().getCSPARQLQuery(queryKey));
+		}
+		return queries;
+	}
+
+	private Map<String, String> getRDFoxQueries() {
+		Map<String, String> queries = new HashMap<>();
+		for(String queryKey : Config.getInstance().getQuerySet()) {
+			queries.put("q" + queryKey.substring(queryKey.length()-1), Config.getInstance().getRDFoxQuery(queryKey));
 		}
 		return queries;
 	}
